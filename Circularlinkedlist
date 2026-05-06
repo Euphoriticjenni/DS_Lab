@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+
+Node* insertBegin(Node* head, int val) {
+    Node* newNode = new Node{val, NULL};
+
+    if (!head) {
+        newNode->next = newNode;
+        return newNode;
+    }
+
+    Node* temp = head;
+    while (temp->next != head)
+        temp = temp->next;
+
+    newNode->next = head;
+    temp->next = newNode;
+
+    return newNode;
+}
+
+
+Node* insertEnd(Node* head, int val) {
+    Node* newNode = new Node{val, NULL};
+
+    if (!head) {
+        newNode->next = newNode;
+        return newNode;
+    }
+
+    Node* temp = head;
+    while (temp->next != head)
+        temp = temp->next;
+
+    temp->next = newNode;
+    newNode->next = head;
+
+    return head;
+}
+
+
+Node* deleteBegin(Node* head) {
+    if (!head) return NULL;
+
+    if (head->next == head) {
+        delete head;
+        return NULL;
+    }
+
+    Node* temp = head;
+    Node* last = head;
+
+    while (last->next != head)
+        last = last->next;
+
+    head = head->next;
+    last->next = head;
+
+    delete temp;
+    return head;
+}
+
+
+Node* deleteEnd(Node* head) {
+    if (!head) return NULL;
+
+    if (head->next == head) {
+        delete head;
+        return NULL;
+    }
+
+    Node* temp = head;
+
+    while (temp->next->next != head)
+        temp = temp->next;
+
+    Node* last = temp->next;
+    temp->next = head;
+
+    delete last;
+    return head;
+}
+
+
+void display(Node* head) {
+    if (!head) return;
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << "(head)\n";
+}
